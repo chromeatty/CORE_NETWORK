@@ -1,0 +1,18 @@
+# Steps for when changes are made and to runserver
+# These commands must be run on cmd or local compiler terminal
+# steps for visual studio: open terminal -> select new terminal "+ button" -> Command promt.
+
+python manage.py makemigrations
+
+# Run after changes are made
+python manage.py migrate
+
+# Run when wanting to test localy eg on Chrome
+python manage.py runserver
+
+
+# other commands that are helpfull
+# used to manually inspect the database using a database management tool or Django’s own dbshell
+python manage.py dbshell
+
+python manage.py collectstatic

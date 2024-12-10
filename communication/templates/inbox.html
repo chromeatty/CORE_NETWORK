@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+{# data-page-type used for ajex rediect to inbox#}
+<div class="container mt-4" data-page-type="inbox_page">
+    <h2 class="mb-4">Your Inbox</h2>
+    {# message-container used to delete messages#}
+    <div class="list-group message-container">
+        {% for message in messages %}
+        <div class="list-group-item d-flex flex-column flex-md-row justify-content-between align-items-center" id="message-{{ message.id }}">
+            <div class="d-flex justify-content-start">
+                <strong class="me-2">{{ message.sender.username }}</strong>
+            </div>
+            <div class="d-flex justify-content-center">
+                <small>{{ message.subject }}</small>
+            </div>
+            <div class="d-flex justify-content-end mt-2 mt-md-0">
+                <!-- Open Button -->
+                <a href="{% url 'view_message' message.id %}" class="btn btn-info btn-md me-2">Open</a>
+                <!-- Reply Button -->
+                <a href="{% url 'send_message_to' message.sender.id %}" class="btn btn-primary btn-md me-2">Reply</a>
+                <!-- Delete Button -->
+                <button type="button" class="btn btn-danger btn-md delete-btn" data-message-id="{{ message.id }}">Delete</button>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 no-message">
+            <div class="alert alert-info text-center">No messages</div>
+        </div>
+        {% endfor %}
+    </div>
+    <hr>
+    <a href="{% url 'send_message' %}"><button type="button2" class="btn btn-secondary btn-lg btn-block">Send new message</button></a>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{% load static %}
+<script src="{% static 'js/messages_actions.js' %}"></script>
+
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Analytics Dashboard</h2>
+<p>Total Requests: {{ total_requests }}</p>
+<p>Fulfilled Requests: {{ fulfilled_requests }}</p>
+<h3>Requests by Category</h3>
+<ul>
+    {% for item in category_counts %}
+    <li>{{ item.category }}: {{ item.count }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

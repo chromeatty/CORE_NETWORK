@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<h2>Search Requests</h2>
+<form method="get">
+    {{ filter.form|crispy }}
+    <button type="submit">Search</button>
+</form>
+<ul>
+    {% for request in filter.qs %}
+    <li>
+        <strong>{{ request.category }}</strong> - {{ request.description }} - {{ request.get_urgency_display }}
+        <a href="{% url 'request_detail' request.pk %}">View Details</a>
+    </li>
+    {% empty %}
+    <li>No matching requests found.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

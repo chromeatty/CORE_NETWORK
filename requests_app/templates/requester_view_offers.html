@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+
+<div class="container mt-4" data-page-type="requester_view_all_offers">
+    <h2 class="text-center mb-3">Available Offers</h2>
+    <div class="row offer-container">
+        {% for offer in offers %}
+        {% if offer.status == 'pending' or offer.status == 'in_progress' %}
+        <div class="col-md-6 col-lg-6 mb-4 item_offer" id="offer-{{ offer.id }}">
+            <div class="card">{#<div class="card h-100 shadow-sm">#}
+                <div class="card-header text-center">
+                    <h3>{{ offer.title }}</h3>
+                </div>
+                <div class="card-body">
+                    {#<h5 class="card-title">{{ offer.title }}</h5>#}
+                    {#<p class="card-text"><i class="fas fa-align-left"></i> <strong>Description:</strong> {{ offer.description }}</p>#}
+                    <p class="card-text"><i class="fas fa-map-marker-alt"></i> <strong>Location:</strong>
+                        {% if offer.location_type == 'address' %}
+                            {{ offer.address }}
+                        {% elif offer.location_type == 'coordinates' %}
+                            Latitude: {{ offer.latitude }}, Longitude: {{ offer.longitude }}
+                        {% else %}
+                            Location not provided
+                        {% endif %}
+                    </p> 
+                    <p class="card-text"><i class="fas fa-filter"></i> <strong>Category:</strong> {{ offer.category }}</p>
+                    <p class="card-text"><i class="fas fa-info-circle"></i> <strong>Status:</strong> {{ offer.status }}</p>
+                    {#<p class="card-text"><i class="fas fa-cubes"></i> <strong>Quantity:</strong> {{ offer.quantity }}</p>#}
+                    <p class="card-text"><i class="fas fa-calendar-alt"></i> <strong>Availability:</strong> {{ offer.availability_start|date:"SHORT_DATE_FORMAT" }} - {{ offer.availability_end|date:"SHORT_DATE_FORMAT" }}</p>
+                    <p class="card-text"><i class="fas fa-user"></i> <strong>Posted by:</strong> {{ offer.user.username }}</p>
+                </div>
+                <div method="post" class="card-footer bg-transparent d-flex justify-content-between">
+                    <div class="d-flex justify-content-between align-items-left ">
+                        <a href="{% url 'send_message_to' offer.user.id %}" class="btn btn-primary">
+                            <i class="fas fa-envelope"></i> Message
+                        </a>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center ">
+                        <a href="{% url 'requester_view_offers_detail' offer.id %}" class="btn btn-primary">
+                            <i class="fas fa-info-circle"></i> Details
+                        </a>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-right">
+                        <form method="post" class="like-form" data-offer-id="{{ offer.id }}">
+                            {% csrf_token %}
+                            <button type="button" class="btn {% if request.user in offer.likes.all %}btn-success{% else %}btn-outline-success{% endif %} like-btn">
+                                {% if request.user in offer.likes.all %}
+                                <i class="fas fa-heart"></i> Unlike
+                                {% else %}
+                                <i class="far fa-heart"></i> Like
+                                {% endif %}
+                            </button>
+                            <span class="likes-count">{{ offer.likes.count }}</span>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% empty %}
+        <div class="col-12 no-offers">
+            <div class="alert alert-info text-center">No offers available.</div>
+        </div>
+        {% endfor %}
+    </div>
+    <hr>
+    <a href="{% url 'requester_liked_offers' %}"><button type="button2" class="btn btn-secondary btn-lg btn-block">View liked offers</button></a>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{% load static %}
+<script src="{% static 'js/liked_offers.js' %}"></script>
+{% endblock %}
+

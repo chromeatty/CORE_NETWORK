@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+
+
+<div class="full-height-container">
+    <!-- Hero Section -->
+    <section class="hero-section" data-aos="fade-up">
+        <!-- Hero content -->
+        <div class="container text-center">
+            <h1 class="display-4" data-aos="fade-down" data-aos-delay="200">Welcome to CORE!</h1>
+            <p class="lead" data-aos="fade-up" data-aos-delay="400">Connecting people in need with local resources and donations.</p>
+            <a href="{% url 'signup' %}" class="btn btn-primary btn-lg mt-4" data-aos="zoom-in" data-aos-delay="600">Get Started</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section py-5" data-aos="fade-up">
+        <!-- About content -->
+        <div class="container">
+            <h2 class="section-title text-center" data-aos="fade-right">About CORE</h2>
+            <p class="text-center" data-aos="fade-left" data-aos-delay="200">
+                CORE is a request and donation platform that connects people in need with available resources and services in their community...
+            </p>
+        </div>
+    </section>
+</div>
+<!-- Recent Requests Section -->
+<section class="recent-requests-section py-5 bg-light">
+    <div class="container" data-aos="fade-up">
+        <h2 class="section-title" data-aos="fade-up">Recent Requests</h2>
+        <ul class="list-group">
+            {% for request in recent_requests %}
+            <li class="list-group-item" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:"0" }}00">
+                <h5>{{ request.title }}</h5>
+                <p>{{ request.description|truncatewords:20 }}</p>
+                <small>by {{ request.user.username }} | Status: {{ request.get_status_display }}</small>
+            </li>
+            {% empty %}
+            <li class="list-group-item">No recent requests available.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
+
+<!-- Success Stories Section -->
+<section class="success-stories-section py-5 bg-light">
+    <div class="container" data-aos="fade-up">
+        <h2 class="section-title" data-aos="fade-up">Success Stories</h2>
+        {% for story in success_stories %}
+        <div class="card mb-3" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:"0" }}00">
+            <div class="card-body">
+                <h5 class="card-title">{{ story.title }}</h5>
+                <p class="card-text">{{ story.summary|truncatewords:30 }}</p>
+            </div>
+        </div>
+        {% empty %}
+        <p>No success stories available at the moment.</p>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="how-it-works-section py-5">
+    <div class="container">
+        <h2 class="section-title text-center mb-5" data-aos="fade-up">How It Works</h2>
+        <div class="row text-center">
+            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="icon mb-3">
+                    <i class="fas fa-clipboard-list fa-3x text-primary"></i>
+                </div>
+                <h4>Submit or Browse Requests</h4>
+                <p>People in need can submit requests for resources, while providers can browse requests and fulfill them.</p>
+            </div>
+            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="400">
+                <div class="icon mb-3">
+                    <i class="fas fa-handshake fa-3x text-primary"></i>
+                </div>
+                <h4>Connect & Coordinate</h4>
+                <p>Our secure messaging system lets you coordinate pick-ups, deliveries, and details seamlessly.</p>
+            </div>
+            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="600">
+                <div class="icon mb-3">
+                    <i class="fas fa-heart fa-3x text-primary"></i>
+                </div>
+                <h4>Make a Difference</h4>
+                <p>By participating, you're contributing to a stronger, more supportive community.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features-section py-5 bg-light">
+    <div class="container">
+        <h2 class="section-title text-center mb-5" data-aos="fade-up">Platform Features</h2>
+        <div class="row text-center">
+            <div class="col-md-4 mb-4" data-aos="flip-left" data-aos-delay="200">
+                <div class="icon mb-3">
+                    <i class="fas fa-user-circle fa-3x text-primary"></i>
+                </div>
+                <h4>User Profiles</h4>
+                <p>Create and manage profiles for both requesters and providers, with customized options for each.</p>
+            </div>
+            <div class="col-md-4 mb-4" data-aos="flip-left" data-aos-delay="400">
+                <div class="icon mb-3">
+                    <i class="fas fa-map-marker-alt fa-3x text-primary"></i>
+                </div>
+                <h4>Request Matching</h4>
+                <p>Our system automatically matches requests with available providers based on location and type of need.</p>
+            </div>
+            <div class="col-md-4 mb-4" data-aos="flip-left" data-aos-delay="600">
+                <div class="icon mb-3">
+                    <i class="fas fa-bell fa-3x text-primary"></i>
+                </div>
+                <h4>Real-Time Notifications</h4>
+                <p>Get instant notifications when a request is accepted, a message is received, or a request is fulfilled.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action Section -->
+<section class="cta-section py-5" data-aos="zoom-in">
+    <div class="container text-center">
+        <h2 class="mb-4" data-aos="fade-up">Ready to Make a Difference?</h2>
+        <a href="{% url 'signup' %}" class="btn btn-primary btn-lg" data-aos="zoom-in-up" data-aos-delay="200">Join CORE Today</a>
+    </div>
+</section>
+
+{% endblock %}

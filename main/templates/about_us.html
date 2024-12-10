@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/about.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- About Us Hero Section -->
+<section class="about-hero-section" data-aos="fade-up">
+    <div class="container text-center">
+        <h1>About Us</h1>
+        <p class="lead">Connecting Communities, Empowering Lives</p>
+    </div>
+</section>
+
+<!-- Our Story Section -->
+<section class="our-story-section py-5" data-aos="fade-up">
+    <div class="container">
+        <h2 class="section-title text-center">Our Story</h2>
+        <p>
+            Founded in <strong>2023</strong>, CORE was born out of a desire to create a more connected and compassionate world. Recognizing that traditional charity systems and isolated relief efforts often leave gaps, we set out to fill those by leveraging technology to bring communities together.
+        </p>
+        <p>
+            Our journey began when we saw individuals like Maria, a single mother struggling to provide for her children after losing her job, and John, a local grocery store owner eager to give back to his community. We realized that by connecting people in need with those willing to help, we could make a significant impact.
+        </p>
+        <p>
+            By integrating local resolution centers and geolocation services, we've made it possible for more people to access our services, regardless of their circumstances. CORE continues to evolve, guided by our core values and feedback from our users. We are dedicated to enhancing our features, expanding our network, and ultimately, making a positive difference in the lives of many more individuals and communities.
+        </p>
+    </div>
+</section>
+
+<!-- What We Do Section -->
+<section class="what-we-do-section py-5 bg-light" data-aos="fade-up">
+    <div class="container">
+        <h2 class="section-title text-center">What We Do</h2>
+        <div class="row">
+            <!-- For People in Need -->
+            <div class="col-md-6 mb-4" data-aos="fade-right" data-aos-delay="200">
+                <h3>For People in Need</h3>
+                <p>
+                    We offer an easy-to-use platform where individuals can submit requests for food, aid, water, clothing, or any services they require. By connecting with local providers, we aim to meet urgent needs efficiently.
+                </p>
+            </div>
+            <!-- For Providers -->
+            <div class="col-md-6 mb-4" data-aos="fade-left" data-aos-delay="400">
+                <h3>For Providers</h3>
+                <p>
+                    Organizations, charities, and individuals with resources to share can post their available supplies or services. They can also browse existing requests in their area and offer assistance where it's needed most.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Our Commitment Section -->
+<section class="our-commitment-section py-5" data-aos="fade-up">
+    <div class="container">
+        <h2 class="section-title text-center">Our Commitment</h2>
+        <ul class="commitment-list">
+            <li data-aos="fade-up" data-aos-delay="200"><strong>Community Empowerment:</strong> We strive to empower communities by facilitating connections that lead to immediate assistance and long-term support.</li>
+            <li data-aos="fade-up" data-aos-delay="400"><strong>Accessibility:</strong> Our platform is accessible online and through local resolution centers, ensuring that even those without internet access can receive help.</li>
+            <li data-aos="fade-up" data-aos-delay="600"><strong>Privacy and Security:</strong> We prioritize the privacy and security of our users, adhering to data protection regulations and allowing users to control their information visibility.</li>
+        </ul>
+    </div>
+</section>
+
+<!-- Meet Our Team Section -->
+<section class="team-section py-5 bg-light">
+    <div class="container">
+        <h2 class="section-title text-center" data-aos="fade-up">Meet Our Team</h2>
+        <div class="row">
+            <!-- Team Member 1 -->
+            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="team-member text-center">
+                    <img src="{% static 'images/team/member1.jpg' %}" alt="John Doe" class="img-fluid rounded-circle mb-3">
+                    <h3>John Doe</h3>
+                    <p class="position">Founder & CEO</p>
+                    <p>John has over 20 years of experience in community development. He is passionate about connecting people and fostering supportive networks.</p>
+                </div>
+            </div>
+            <!-- Team Member 2 -->
+            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="400">
+                <div class="team-member text-center">
+                    <img src="{% static 'images/team/member2.jpg' %}" alt="Jane Smith" class="img-fluid rounded-circle mb-3">
+                    <h3>Jane Smith</h3>
+                    <p class="position">Chief Technology Officer</p>
+                    <p>Jane is an expert in software development with 15 years of experience. She is passionate about leveraging technology for social good.</p>
+                </div>
+            </div>
+            <!-- Team Member 3 -->
+            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="600">
+                <div class="team-member text-center">
+                    <img src="{% static 'images/team/member3.jpg' %}" alt="Alex Johnson" class="img-fluid rounded-circle mb-3">
+                    <h3>Alex Johnson</h3>
+                    <p class="position">Chief Operations Officer</p>
+                    <p>Alex has a strong background in logistics and operations management. He enjoys streamlining processes to enhance user experiences.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Team Member 4 -->
+            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="800">
+                <div class="team-member text-center">
+                    <img src="{% static 'images/team/member4.png' %}" alt="Emily Davis" class="img-fluid rounded-circle mb-3">
+                    <h3>Emily Davis</h3>
+                    <p class="position">Chief Marketing Officer</p>
+                    <p>Emily specializes in strategic marketing and is enthusiastic about community outreach and engagement.</p>
+                </div>
+            </div>
+            <!-- Team Member 5 -->
+            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="1000">
+                <div class="team-member text-center">
+                    <img src="{% static 'images/team/member5.png' %}" alt="Michael Brown" class="img-fluid rounded-circle mb-3">
+                    <h3>Michael Brown</h3>
+                    <p class="position">Head of Design</p>
+                    <p>Michael brings over 15 years of experience in user interface and experience design. He is an avid photographer and artist.</p>
+                </div>
+            </div>
+            <!-- Team Member 6 -->
+            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="1200">
+                <div class="team-member text-center">
+                    <img src="{% static 'images/team/member6.jpg' %}" alt="Sarah Wilson" class="img-fluid rounded-circle mb-3">
+                    <h3>Sarah Wilson</h3>
+                    <p class="position">Lead Developer</p>
+                    <p>Sarah is an expert in full-stack development and is passionate about open-source technologies and mentoring new developers.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action Section -->
+<section class="cta-section py-5" data-aos="zoom-in">
+    <div class="container text-center">
+        <h2 class="mb-4" data-aos="fade-up">Join Us in Making a Difference</h2>
+        <a href="{% url 'signup' %}" class="btn btn-primary btn-lg" data-aos="zoom-in-up" data-aos-delay="200">Get Involved</a>
+    </div>
+</section>
+{% endblock %}

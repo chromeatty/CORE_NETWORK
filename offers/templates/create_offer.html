@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+<div class="container">
+    <h2>Create New Offer</h2>
+    <form method="post" class="offer-form">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+                {% for error in form.non_field_errors %}
+                    <div>{{ error }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+
+        {% for field in form %}
+            <div class="form-group" id="div_id_{{ field.name }}">
+                <label>{{ field.label }}</label>
+                {% if field.help_text %}
+                <small class="form-text text-muted">{{ field.help_text }}</small>
+                {% endif %}
+                {{ field }}
+                {% for error in field.errors %}
+                    <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary">Create Offer</button>
+    </form>
+</div>
+
+<!-- JavaScript for map validation -->
+<script src="{% static 'js/create_edit_map_validate.js' %}"></script>
+{% endblock %}

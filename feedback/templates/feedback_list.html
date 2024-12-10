@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Your Feedback</h2>
+<ul>
+    {% for feedback in feedbacks %}
+    <li>
+        <strong>From:</strong> {{ feedback.giver.username }} - Rating: {{ feedback.rating }}
+        <p>{{ feedback.testimonial }}</p>
+    </li>
+    {% empty %}
+    <li>No feedback received.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+
+<div class="container mt-4" data-page-type="user_requst_list_page">
+    <h2 class="text-center mb-3">Your Requests</h2>
+    <div class="row request-container">
+        {% for request_ in requests_app %}
+            <div class="col-md-6 col-lg-6 mb-4 item_request" id="request_-{{ request_.id }}">
+                <div class="card">
+                    {#<div class="card">#}
+                    <div class="card-header text-center">
+                        <h3>{{ request_.title }}</h3>
+                    </div>
+                    <div class="card-body">
+                        {#<p class="card-text"><i class="fas fa-align-left"></i> <strong>Description:</strong> {{ request_.description }}</p>#}
+                        {#<p class="card-text"><i class="fas fa-map-marker-alt"></i> <strong>Location:</strong> {{ request_.location }}</p>#}
+                        <p class="card-text"><i class="fas fa-map-marker-alt"></i> <strong>Location:</strong>
+                            {% if request_.location_type == 'address' %}
+                                {{ request_.address }}
+                            {% elif request_.location_type == 'coordinates' %}
+                                Latitude: {{ request_.latitude }}, Longitude: {{ request_.longitude }}
+                            {% else %}
+                                Location not provided
+                            {% endif %}
+                        </p>                        
+                        <p class="card-text"><i class="fas fa-filter"></i> <strong>Category:</strong> {{ request_.category }}</p>
+                        <p class="card-text"><i class="fas fa-bolt"></i> <strong>Urgency:</strong> {{ request_.get_urgency_display }}</p>
+                        <p class="card-text"><i class="fas fa-info-circle"></i> <strong>Status:</strong> {{ request_.get_status_display }}</p>
+                        <p class="card-text"><i class="fas fa-calendar-alt"></i> <strong>Submitted on:</strong> {{ request_.created_at|date:"SHORT_DATE_FORMAT" }}</p>
+                        {% if request_.accepted_by %}
+                        <p class="card-text"><i class="fas fa-user-check"></i> <strong>Accepted by:</strong> {{ request_.accepted_by.username }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="card-footer bg-transparent d-flex justify-content-between">
+                        <div class="d-flex justify-content-between align-items-left ">
+                            {% if not request_.accepted_by %}
+                            <a href="{% url 'edit_request' request_.pk %}" class="btn btn-secondary mr-2">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+                            {% endif %}
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="{% url 'user_request_details' request_.pk %}" class="btn btn-primary">
+                                <i class="fas fa-info-circle"></i> Details
+                            </a>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-right ">
+                            <form class="delete-form" data-request-id="{{ request_.id }}" >
+                                {% csrf_token %}
+                                <input type="hidden" name="request_id" value="{{ request_.id }}">
+                                <button type="button" class="btn btn-danger delete-btn" data-action="request">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+        <div class="col-12 no-requests-message">
+            <div class="alert alert-info text-center">No requests found.</div>
+        </div>
+        {% endfor %} 
+    </div>
+    <hr>
+    <a href="{% url 'create_request' %}"><button type="button2" class="btn btn-secondary btn-lg btn-block">Create New Request</button></a>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{% load static %}
+<script src="{% static 'js/request_or_offer_delete.js' %}"></script>
+{% endblock %}

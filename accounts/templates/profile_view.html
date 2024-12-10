@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/profile_view.css' %}">
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<div class="profile-container">
+    <h2>Your Profile</h2>
+    <p><strong>Contact Info:</strong> {{ profile.contact_info }}</p>
+    <p><strong>Service Areas:</strong> {{ profile.service_areas }}</p>
+    <p><strong>Preferences:</strong> {{ profile.preferences }}</p>
+    <p><strong>Privacy Settings:</strong> {{ profile.privacy_settings }}</p>
+    <a href="{% url 'profile_edit' %}" class="edit-link">Edit Profile</a>
+
+    <div id="map" style="height:400px;width:100%;margin-top:20px;"></div>
+</div>
+
+<script>
+    var locationType = "{{ profile.location_type }}";
+    var address = "{{ profile.address|escapejs }}";
+    var latitude = {{ profile.latitude|default_if_none:"null" }};
+    var longitude = {{ profile.longitude|default_if_none:"null" }};
+
+    if (locationType === 'address') {
+        // using the address to get the coordinates
+        fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(address))
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) {
+                if (data && data.length > 0) {
+                    var latitude = parseFloat(data[0].lat);
+                    var longitude = parseFloat(data[0].lon);
+
+                    // setting the map up
+                    var map = L.map('map').setView([latitude, longitude], 12);
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '&copy; OpenStreetMap contributors'
+                    }).addTo(map);
+                    L.marker([latitude, longitude]).addTo(map)
+                        .bindPopup(address)
+                        .openPopup();
+                } else {
+                    console.error('Address not found');
+                    alert('Address not found');
+                }
+            })
+            .catch(function(err) {
+                console.error('Error in geocoding', err);
+                alert('Error in geocoding');
+            });
+    } else if (locationType === 'coordinates') {
+        if (latitude !== null && longitude !== null) {
+            // use the provided coordinates so no need to geocode
+            var map = L.map('map').setView([latitude, longitude], 12);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(map);
+            L.marker([latitude, longitude]).addTo(map)
+                .bindPopup("Your Location")
+                .openPopup();
+        } else {
+            console.error('Invalid coordinates');
+            alert('Invalid coordinates');
+        }
+    } else {
+        console.error('No valid location data provided');
+        alert('No valid location data provided');
+    }
+</script>
+
+{% endblock %}

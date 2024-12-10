@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+
+
+<div class="container mt-4" data-page-type="user_offer_list_page">
+    <h2 class="text-center mb-3">Your Offers</h2>
+    <div class="row offer-container">
+        {% for offer in offers %}
+        <div class="col-md-6 col-lg-6 mb-4 item_offer" id="offer-{{ offer.id }}">
+            <div class="card h-100 shadow-sm">
+                <div class="card-header text-center">
+                    <h3>{{ offer.title }}</h3>
+                </div>
+                <div class="card-body">
+                    {#<p class="card-text"><i class="fas fa-align-left"></i> <strong>Description:</strong> {{ offer.description }}</p>#}
+                    {#<p class="card-text"><i class="fas fa-map-marker-alt"></i> <strong>Location:</strong> {{ offer.location }}</p>#}
+                    <p class="card-text"><i class="fas fa-map-marker-alt"></i> <strong>Location:</strong>
+                        {% if offer.location_type == 'address' %}
+                            {{ offer.address }}
+                        {% elif offer.location_type == 'coordinates' %}
+                            Latitude: {{ offer.latitude }}, Longitude: {{ offer.longitude }}
+                        {% else %}
+                            Location not provided
+                        {% endif %}
+                    </p> 
+                    <p class="card-text"><i class="fas fa-filter"></i> <strong>Category:</strong> {{ offer.category }}</p>
+                    <p class="card-text"><i class="fas fa-info-circle"></i> <strong>Status:</strong> {{ offer.status }}</p>
+                    <p class="card-text"><i class="fas fa-cubes"></i> <strong>Quantity:</strong> {{ offer.quantity }}</p>
+                    <p class="card-text"><i class="fas fa-calendar-alt"></i> <strong>Start:</strong> {{ offer.availability_start|date:"SHORT_DATE_FORMAT" }}</p>
+                    <p class="card-text"><i class="fas fa-calendar-alt"></i> <strong>Finish:</strong> {{ offer.availability_end|date:"SHORT_DATE_FORMAT" }}</p>
+                </div>
+                <div class="card-footer bg-transparent d-flex justify-content-between">
+                    <div class="d-flex justify-content-between align-items-left">
+                        {#<a href="{% url 'edit_offer' offer.pk %}" class="btn btn-secondary">Edit</a>#}
+                        <a href="{% url 'edit_offer' offer.pk %}" class="btn btn-primary">
+                            <i class="fas fa-envelope"></i> Edit
+                        </a>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="{% url 'user_offer_details' offer.pk %}" class="btn btn-primary">
+                            <i class="fas fa-info-circle"></i> Details
+                        </a>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-right ">
+                        <form class="delete-form" data-offer-id="{{ offer.id }}">
+                            {% csrf_token %}
+                            <input type="hidden" name="offer_id" value="{{ offer.id }}">
+                            <button type="button" class="btn btn-danger delete-btn" data-action="offer">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info text-center">No offers found.</div>
+        </div>
+        {% endfor %}
+    </div>
+    <hr>
+    <a href="{% url 'create_offer' %}"><button type="button2" class="btn btn-secondary btn-lg btn-block">Create New Offer</button></a>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{% load static %}
+<script src="{% static 'js/request_or_offer_delete.js' %}"></script>
+{% endblock %}

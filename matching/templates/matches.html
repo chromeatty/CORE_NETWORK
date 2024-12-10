@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Matches</h2>
+<ul>
+    {% for match in matches %}
+    <li>
+        <strong>Request:</strong> {{ match.request.category }} - {{ match.request.description }}
+        <ul>
+            <li>Possible Offers:</li>
+            <ul>
+                {% for offer in match.offers %}
+                <li>{{ offer.user.username }} - Quantity: {{ offer.quantity }}</li>
+                {% endfor %}
+            </ul>
+        </ul>
+    </li>
+    {% empty %}
+    <li>No matches found.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
